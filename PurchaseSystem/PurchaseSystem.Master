@@ -15,7 +15,22 @@
 </head>
 <body>
     <form id="form1" runat="server">
-
+        <div class="container" style="height:100px">
+            <div class="row" style="height:100px">
+                <div class="col-3 text-center">
+                    <br />
+                    <span style="color:darkblue;font-size:35px">LOGO</span>
+                </div>
+                <div class="col-6" style="padding-top:45px">
+                    <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Index.aspx">進貨單管理</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/ProductList.aspx">商品清單</asp:HyperLink>
+                </div>
+                <div class="col-3" style="padding-top:45px">
+                    <asp:Label ID="Label1" runat="server" Text="歡迎XXX"></asp:Label>
+                    <asp:LinkButton ID="LBLogout" runat="server" OnClick="LBLogout_Click">登出</asp:LinkButton>
+                </div>
+            </div>
+        </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
