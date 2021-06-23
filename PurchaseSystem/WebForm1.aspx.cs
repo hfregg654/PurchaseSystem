@@ -8,15 +8,15 @@ using System.Web.UI.WebControls;
 
 namespace PurchaseSystem
 {
-    public partial class Index : System.Web.UI.Page
+    public partial class WebForm1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             PurchaseDBTool dBTool = new PurchaseDBTool();
             int page;
-            var result = dBTool.GetPurchase(out page);
-            RepPurchases.DataSource = result;
-            RepPurchases.DataBind();
+            var a= dBTool.GetPurchase(out page);
+            Repeater1.DataSource = a;
+            Repeater1.DataBind();
         }
     }
 }
