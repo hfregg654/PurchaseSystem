@@ -11,35 +11,71 @@ namespace PurchaseSystem
 {
 
 
-    public partial class Index
+    public partial class PurchaseManage
     {
 
         /// <summary>
-        /// RepPurchases 控制項。
+        /// TBpurid 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater RepPurchases;
+        protected global::System.Web.UI.WebControls.TextBox TBpurid;
 
         /// <summary>
-        /// BtnDel 控制項。
+        /// datepicker 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnDel;
+        protected global::System.Web.UI.WebControls.TextBox datepicker;
 
         /// <summary>
-        /// HLNew 控制項。
+        /// Btndel 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HLNew;
+        protected global::System.Web.UI.WebControls.Button Btndel;
+
+        /// <summary>
+        /// RepOrders 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepOrders;
+
+        /// <summary>
+        /// LblTotal 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTotal;
+
+        /// <summary>
+        /// HLReturn 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HLReturn;
+
+        /// <summary>
+        /// BtnDone 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDone;
 
         /// <summary>
         /// HLFirst 控制項。
@@ -87,12 +123,39 @@ namespace PurchaseSystem
         protected global::System.Web.UI.WebControls.HyperLink HLLast;
 
         /// <summary>
-        /// BtnOutput 控制項。
+        /// DDLCate 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnOutput;
+        protected global::System.Web.UI.WebControls.DropDownList DDLCate;
+
+        /// <summary>
+        /// LblProd 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblProd;
+
+        /// <summary>
+        /// TBProdnum 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBProdnum;
+
+        /// <summary>
+        /// LblTprice 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTprice;
     }
 }

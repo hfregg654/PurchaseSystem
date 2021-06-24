@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PurchaseSystem.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,12 @@ namespace PurchaseSystem
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                PurchaseDBTool dBTool = new PurchaseDBTool();
+                RepProuduct.DataSource = dBTool.GetProduct();
+                RepProuduct.DataBind();
+            }
         }
     }
 }

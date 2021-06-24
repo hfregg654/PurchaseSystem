@@ -50,6 +50,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -79,14 +82,37 @@
     <Content Include="Index.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProductList.aspx" />
+    <Content Include="PurchaseManage.aspx" />
     <Content Include="Script\bootstrap.min.css" />
     <Content Include="Script\bootstrap.min.js" />
+    <Content Include="Script\jquery-ui-timepicker-addon.js" />
     <Content Include="Script\jquery-3.6.0.min.js" />
+    <Content Include="Script\jquery-ui-1.12.1\AUTHORS.txt" />
+    <Content Include="Script\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_555555_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_777620_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_777777_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Script\jquery-ui-1.12.1\index.html" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.css" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.js" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.min.css" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.min.js" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.structure.css" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.structure.min.css" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.theme.css" />
+    <Content Include="Script\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
+    <Content Include="Script\jquery-ui-1.12.1\LICENSE.txt" />
+    <Content Include="Script\jquery-ui-timepicker-addon.css" />
     <Content Include="Script\mystyle.css" />
     <Content Include="Web.config" />
-    <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\POPGetProuductHandler.ashx.cs">
+      <DependentUpon>POPGetProuductHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -120,6 +146,13 @@
       <DependentUpon>ProductList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseManage.aspx.cs">
+      <DependentUpon>PurchaseManage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PurchaseManage.aspx.designer.cs">
+      <DependentUpon>PurchaseManage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PurchaseSystem.Master.cs">
       <DependentUpon>PurchaseSystem.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -129,18 +162,16 @@
     </Compile>
     <Compile Include="Utility\LoginHelper.cs" />
     <Compile Include="Utility\PurchaseDBTool.cs" />
+    <Compile Include="ViewModels\OrderView.cs" />
+    <Compile Include="ViewModels\PageLink.cs" />
+    <Compile Include="ViewModels\ProductView.cs" />
     <Compile Include="ViewModels\PurchaseView.cs" />
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="API\POPGetProuductHandler.ashx" />
     <None Include="packages.config" />
     <Content Include="PurchaseSystem.Master" />
+    <Content Include="Script\jquery-ui-1.12.1\package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
