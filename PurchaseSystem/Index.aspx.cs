@@ -15,6 +15,9 @@ namespace PurchaseSystem
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ProdStatic.noworder = new List<OrderView>();
+            ProdStatic.Subtotal = 0;
+            ProdStatic.TempID = 0;
             if (!IsPostBack)
             {
                 BuildDataTableCommit();
@@ -37,7 +40,7 @@ namespace PurchaseSystem
             PurchaseDBTool dBTool = new PurchaseDBTool();
             int page;
             var result = dBTool.GetPurchase(out page, pIndex);
-            RepPurchases.DataSource = result;
+            RepPurchases.DataSource = result.Skip(10 * (pIndex - 1)).Take(10);
             RepPurchases.DataBind();
 
 

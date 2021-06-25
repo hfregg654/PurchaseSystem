@@ -10,6 +10,7 @@
             var prod = product.split(',');
             $("#ContentPlaceHolder1_LblProd").html(prod[0]);
             $("#selectprodprice").val(prod[1]);
+            $("#selectprodid").val(prod[2]);
             var num = $("#ContentPlaceHolder1_TBProdnum").val();
             gettotal(num);
         }
@@ -55,7 +56,7 @@
                         htmltext += "<input type='radio' id='html";
                         htmltext += i;
                         htmltext += "' name='chooseprod' onchange='handleChange1(this.value);' value='";
-                        htmltext += responsedata[i].ProductName + "," + responsedata[i].ProductPrice;
+                        htmltext += responsedata[i].ProductName + "," + responsedata[i].ProductPrice + "," + responsedata[i].ProuductID;
                         htmltext += "'></div>";
                         htmltext += "<div class='col-4 tableBorder'>";
                         htmltext += responsedata[i].ProuductID;
@@ -92,8 +93,33 @@
 
             $("#Btnprodcancel").click(function () {
                 $("#dialog").dialog("close");
+                $("#prodtable").html("");
+                $("#ContentPlaceHolder1_LblProd").html("");
+                $("#ContentPlaceHolder1_LblTprice").html("");
+                $("#ContentPlaceHolder1_TBProdnum").val(0);
+                $("#ContentPlaceHolder1_DDLCate").val(0);
             });
 
+            $("#Btnprodadd").click(function () {
+                $.ajax({
+                    url: "API/POPAddProdHandler.ashx",
+                    data: {
+                        "ProuductID": $("#selectprodid").val(),
+                        "ProductName": $("#ContentPlaceHolder1_LblProd").html(),
+                        "OrderNum": $("#ContentPlaceHolder1_TBProdnum").val(),
+                        "ProductPrice": $("#selectprodprice").val()
+                    },
+                    type: "POST",
+                    dataType: "json",
+                })
+                    .done(function (responsedata) {
+                        location.reload(true);
+                    })
+                    .fail(function (xhr, status, errThrown) {
+                        alert("傳送失敗");
+                    })
+            });
+            
         });
     </script>
 </asp:Content>
@@ -112,7 +138,8 @@
         <br />
         <div class="row">
             <button id="Btnadd" type="button" class="btn btn-success">＋</button>
-            <asp:Button ID="Btndel" runat="server" Text="－" CssClass="btn btn-danger" />
+            <asp:Button ID="Btndel" runat="server" Text="－" CssClass="btn btn-danger" OnClick="Btndel_Click" 
+                OnClientClick="return confirm('確定刪除勾選的訂單？');" />
         </div>
         <div class="row">
             <asp:Repeater ID="RepOrders" runat="server">
@@ -126,7 +153,7 @@
                 </HeaderTemplate>
                 <ItemTemplate>
                     <div class="col-1 tableBorder">
-                        <asp:CheckBox ID="CBPurchase" runat="server" ToolTip='<%#Eval("OrderID") %>' />
+                        <asp:CheckBox ID="CBOrder" runat="server" ToolTip='<%#Eval("OrderID") %>' />
                     </div>
                     <div class="col-2 tableBorder"><%#Eval("ProuductID") %></div>
                     <div class="col-3 tableBorder"><%#Eval("ProductName") %></div>
@@ -146,10 +173,9 @@
         <br />
         <div class="row justify-content-between">
             <div class="col">
-                <asp:HyperLink ID="HLReturn" runat="server" CssClass="btn btn-danger text-white"
-                    NavigateUrl="~/Index.aspx">取消</asp:HyperLink>
+                <asp:Button ID="Btncancel" runat="server" Text="取消" CssClass="btn btn-danger" OnClick="Btncancel_Click"/>
                 <asp:Button ID="BtnDone" runat="server" Text="完成" CssClass="btn btn-success"
-                    OnClientClick="return confirm('確定新增進貨單？');" />
+                    OnClientClick="return confirm('確定完成進貨單？');"  OnClick="BtnDone_Click"/>
                 <asp:HyperLink ID="HLFirst" runat="server">第一頁</asp:HyperLink>｜
                 <asp:HyperLink ID="HLBack" runat="server">上一頁</asp:HyperLink>｜
                 <asp:Repeater ID="RepPage" runat="server">
@@ -177,6 +203,7 @@
             <div class="col-6">
                 <asp:Label ID="LblProd" runat="server" Text=""></asp:Label>
                 <input id="selectprodprice" type="hidden" value="" />
+                <input id="selectprodid" type="hidden" value="" />
             </div>
             <div class="col-6">數量：</div>
             <div class="col-6">
@@ -190,7 +217,7 @@
         </div>
         <div class="row align-items-center">
             <div class="col">
-                <button id="Btnprodadd" type="button" class="btn btn-success">加入</button>
+                <button id="Btnprodadd" type="submit" class="btn btn-success">加入</button>
             </div>
             <div class="col">
                 <button id="Btnprodcancel" type="button" class="btn btn-danger">取消</button>

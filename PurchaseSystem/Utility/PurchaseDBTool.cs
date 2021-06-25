@@ -9,7 +9,7 @@ namespace PurchaseSystem.Utility
 {
     public class PurchaseDBTool
     {
-        public IEnumerable<PurchaseView> GetPurchase(out int TotalPage, int currentPage = 1, int pageSize = 10)
+        public List<PurchaseView> GetPurchase(out int TotalPage, int currentPage = 1, int pageSize = 10)
         {
 
             using (var context = new ContextModel())
@@ -73,7 +73,7 @@ namespace PurchaseSystem.Utility
                     }
                 }
                 TotalPage = (lastresult.Count / pageSize) + 1;
-                return lastresult.Skip(pageSize * (currentPage - 1)).Take(pageSize);
+                return lastresult;
             }
         }
 
@@ -106,6 +106,98 @@ namespace PurchaseSystem.Utility
             }
         }
 
+        public void InsertPurchase(string pur, DateTime purdate, decimal assests, List<OrderView> orders)
+        {
+            LogInfo info = HttpContext.Current.Session["IsLogined"] as LogInfo;
+            //if (info == null)
+            //{
+            //    return;
+            //}
+            using (var context = new ContextModel())
+            {
+                var updpurchase =
+                         context.Purchases.Where(obj => obj.pur_id == pur && obj.pur_deldate == null).FirstOrDefault();
+                if (updpurchase == null)
+                {
+                    Purchase addpur = new Purchase()
+                    {
+                        pur_id = pur,
+                        pur_purdate = purdate,
+                        pur_total = ProdStatic.Subtotal,
+                        pur_assets = assests - ProdStatic.Subtotal,
+                        pur_credate = DateTime.Now,
+                        pur_creid = info.user_id,
+
+                    };
+                    context.Purchases.Add(addpur);
+                }
+                else
+                {
+                    return;
+                }
+                foreach (var item in orders)
+                {
+                    var updorder =
+                        context.orders.Where(obj => obj.order_id == item.OrderID && obj.order_delflag == false).FirstOrDefault();
+                    if (updorder == null)
+                    {
+                        context.orders.Add(new order
+                        {
+                            order_purid = pur,
+                            order_prodid = item.ProuductID,
+                            order_num = item.OrderNum,
+                            order_delflag = false
+                        });
+                    }
+                }
+                context.SaveChanges();
+            }
+          
+        }
+
+        public void UpdatePurchase(string pur, DateTime purdate, decimal assests, List<OrderView> orders)
+        {
+            LogInfo info = HttpContext.Current.Session["IsLogined"] as LogInfo;
+            //if (info == null)
+            //{
+            //    return;
+            //}
+            using (var context = new ContextModel())
+            {
+                var updpurchase =
+                         context.Purchases.Where(obj => obj.pur_id == pur && obj.pur_deldate == null).FirstOrDefault();
+                decimal lastassets = assests + updpurchase.pur_total;
+                if (updpurchase != null)
+                {
+                    updpurchase.pur_purdate = purdate;
+                    updpurchase.pur_total = ProdStatic.Subtotal;
+                    updpurchase.pur_assets = lastassets - ProdStatic.Subtotal;
+                    updpurchase.pur_update = DateTime.Now;
+                    updpurchase.pur_upid = info.user_id;
+                }
+                else
+                {
+                    return;
+                }
+                foreach (var item in orders)
+                {
+                    var updorder =
+                        context.orders.Where(obj => obj.order_id == item.OrderID && obj.order_delflag == false).FirstOrDefault();
+                    if (updorder == null)
+                    {
+                        context.orders.Add(new order
+                        {
+                            order_purid = pur,
+                            order_prodid = item.ProuductID,
+                            order_num = item.OrderNum,
+                            order_delflag = false
+                        });
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
         public List<ProductView> GetProduct()
         {
             using (var context = new ContextModel())
@@ -113,6 +205,7 @@ namespace PurchaseSystem.Utility
                 var prouductslist =
                      from prouducts in context.Prouducts
                      join categoryM in context.CategoryMasters on prouducts.prod_categoryid equals categoryM.category_id
+                     orderby prouducts.prod_id
                      select new ProductView
                      {
                          ProuductID = prouducts.prod_id,
@@ -169,14 +262,15 @@ namespace PurchaseSystem.Utility
             }
         }
 
-        public IEnumerable<OrderView> GetOrder(string purid, out decimal FullPrice, out int TotalPage, int currentPage = 1, int pageSize = 10)
+        public List<OrderView> GetOrder(string purid, out decimal FullPrice, out int TotalPage, int currentPage = 1, int pageSize = 10)
         {
             using (var context = new ContextModel())
             {
                 var orderslist =
                      from orders in context.orders
                      join prouducts in context.Prouducts on orders.order_prodid equals prouducts.prod_id
-                     where orders.order_purid == purid
+                     where orders.order_purid == purid && orders.order_delflag == false
+                     orderby orders.order_id descending
                      select new OrderView
                      {
                          OrderID = orders.order_id,
@@ -193,7 +287,56 @@ namespace PurchaseSystem.Utility
                     FullPrice += item.TotalPrice;
                 }
                 TotalPage = (result.Count / pageSize) + 1;
-                return result.Skip(pageSize * (currentPage - 1)).Take(pageSize); ;
+                return result;
+            }
+        }
+
+        public List<OrderView> AddOrder(List<OrderView> orders, OrderView order, out int TotalPage, int pageSize = 10)
+        {
+            orders.Add(order);
+            TotalPage = (orders.Count / pageSize) + 1;
+            return orders;
+        }
+
+        public void DelOrder(List<string> id)
+        {
+            //LogInfo info = HttpContext.Current.Session["IsLogined"] as LogInfo;
+            //if (info == null)
+            //{
+            //    return;
+            //}
+            using (var context = new ContextModel())
+            {
+                List<OrderView> temporder = new List<OrderView>();
+                foreach (var item in ProdStatic.noworder)
+                {
+                    temporder.Add(item);
+                }
+
+                foreach (var item in id)
+                {
+                    int idtemp = Convert.ToInt32(item);
+                    if (idtemp > 0)
+                    {
+                        var delorder =
+                            context.orders.Where(obj => obj.order_id == idtemp && obj.order_delflag == false).FirstOrDefault();
+                        if (delorder != null)
+                        {
+                            delorder.order_delflag = true;
+                            var prodprice =
+                                context.Prouducts.Where(obj => obj.prod_id == delorder.order_prodid).FirstOrDefault();
+
+                            ProdStatic.Subtotal -= prodprice.prod_price * delorder.order_num;
+                            ProdStatic.noworder.Remove(ProdStatic.noworder.Where(obj => obj.OrderID == idtemp).FirstOrDefault());
+                        }
+
+                    }
+                    else
+                    {
+                        ProdStatic.noworder.Remove(ProdStatic.noworder.Where(obj => obj.OrderID == idtemp).FirstOrDefault());
+                    }
+                }
+                context.SaveChanges();
             }
         }
     }

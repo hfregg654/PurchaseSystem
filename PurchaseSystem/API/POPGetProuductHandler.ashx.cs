@@ -19,6 +19,7 @@ namespace PurchaseSystem.API
             string Category = context.Request.Form["Category"];
             string Num = context.Request.Form["Num"];
             string Price = context.Request.Form["Price"];
+
             if (!string.IsNullOrWhiteSpace(Category))
             {
                 PurchaseDBTool dBTool = new PurchaseDBTool();

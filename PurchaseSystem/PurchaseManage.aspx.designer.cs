@@ -60,13 +60,13 @@ namespace PurchaseSystem
         protected global::System.Web.UI.WebControls.Label LblTotal;
 
         /// <summary>
-        /// HLReturn 控制項。
+        /// Btncancel 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HLReturn;
+        protected global::System.Web.UI.WebControls.Button Btncancel;
 
         /// <summary>
         /// BtnDone 控制項。

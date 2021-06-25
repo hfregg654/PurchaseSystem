@@ -110,6 +110,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\POPAddProdHandler.ashx.cs">
+      <DependentUpon>POPAddProdHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="API\POPGetProuductHandler.ashx.cs">
       <DependentUpon>POPGetProuductHandler.ashx</DependentUpon>
     </Compile>
@@ -164,11 +167,13 @@
     <Compile Include="Utility\PurchaseDBTool.cs" />
     <Compile Include="ViewModels\OrderView.cs" />
     <Compile Include="ViewModels\PageLink.cs" />
+    <Compile Include="ViewModels\ProdStatic.cs" />
     <Compile Include="ViewModels\ProductView.cs" />
     <Compile Include="ViewModels\PurchaseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="API\POPGetProuductHandler.ashx" />
+    <Content Include="API\POPAddProdHandler.ashx" />
     <None Include="packages.config" />
     <Content Include="PurchaseSystem.Master" />
     <Content Include="Script\jquery-ui-1.12.1\package.json" />

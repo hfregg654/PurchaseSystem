@@ -9,6 +9,8 @@ namespace PurchaseSystem.Models
     public partial class Asset
     {
         [Key]
+        public int assets_id { get; set; }
+
         public decimal assets_total { get; set; }
     }
 }

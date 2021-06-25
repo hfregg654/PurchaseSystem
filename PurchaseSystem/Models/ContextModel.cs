@@ -12,15 +12,19 @@ namespace PurchaseSystem.Models
         {
         }
 
+        public virtual DbSet<Asset> Assets { get; set; }
         public virtual DbSet<CategoryMaster> CategoryMasters { get; set; }
         public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<Prouduct> Prouducts { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Asset> Assets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Asset>()
+                .Property(e => e.assets_total)
+                .HasPrecision(18, 0);
+
             modelBuilder.Entity<CategoryMaster>()
                 .HasMany(e => e.Prouducts)
                 .WithRequired(e => e.CategoryMaster)
@@ -84,10 +88,6 @@ namespace PurchaseSystem.Models
                 .WithRequired(e => e.User)
                 .HasForeignKey(e => e.pur_creid)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Asset>()
-                .Property(e => e.assets_total)
-                .HasPrecision(18, 0);
         }
     }
 }
