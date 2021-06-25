@@ -1,8 +1,12 @@
-﻿using PurchaseSystem.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using PurchaseSystem.Models;
 using PurchaseSystem.Utility;
 using PurchaseSystem.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -87,6 +91,30 @@ namespace PurchaseSystem
             PurchaseDBTool dBTool = new PurchaseDBTool();
             dBTool.DelPurchase(delpur);
             BuildDataTableCommit();
+        }
+
+
+        protected void BtnOutput_Click(object sender, EventArgs e)
+        {
+            OutputPurchase();
+        }
+
+        public void OutputPurchase()
+        {
+            using (var context = new ContextModel())
+            {
+                var rep =
+                     (from obj in context.Purchases
+                      where obj.pur_deldate == null
+                      select new { obj.pur_id, obj.pur_total, obj.pur_purdate, obj.pur_credate }).ToList();
+
+                PurchaseCrystalReport cr = new PurchaseCrystalReport();
+                cr.SetDataSource(rep);
+
+                PurchaseCRV.ReportSource = cr;
+
+                cr.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "発注書一覧表");
+            }
         }
     }
 }

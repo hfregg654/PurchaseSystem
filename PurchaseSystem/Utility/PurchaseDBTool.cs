@@ -152,7 +152,7 @@ namespace PurchaseSystem.Utility
                 }
                 context.SaveChanges();
             }
-          
+
         }
 
         public void UpdatePurchase(string pur, DateTime purdate, decimal assests, List<OrderView> orders)
@@ -339,5 +339,8 @@ namespace PurchaseSystem.Utility
                 context.SaveChanges();
             }
         }
+
+
+       
     }
 }
