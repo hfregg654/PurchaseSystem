@@ -54,6 +54,7 @@ namespace PurchaseSystemWinForm
                 var result = query.ToList();
 
                 List<PurchaseView> lastresult = new List<PurchaseView>();
+                Dictionary<string, string> catenum = new Dictionary<string, string>();
                 foreach (var item in result)
                 {
                     if (lastresult.Count == 0)
@@ -67,6 +68,7 @@ namespace PurchaseSystemWinForm
                             TotalMoney = item.pur_total
                         };
                         lastresult.Add(Temp);
+                        catenum.Add(item.pur_id, item.category_name);
                     }
                     else
                     {
@@ -75,9 +77,21 @@ namespace PurchaseSystemWinForm
                         {
                             if (item.pur_id == itemcheck.PurchaseID)
                             {
-                                itemcheck.PCategory = "多項";
-                                itemcheck.TotalNum += item.order_num;
-                                isadd = true;
+                                if (catenum.ContainsKey(item.pur_id))
+                                {
+                                    if (catenum[item.pur_id].Contains(item.category_name))
+                                    {
+                                        itemcheck.TotalNum += item.order_num;
+                                        isadd = true;
+                                    }
+                                    else
+                                    {
+                                        catenum[item.pur_id] += $",{item.category_name}";
+                                        itemcheck.PCategory = $"多項({catenum[item.pur_id].Split(',').Length})";
+                                        itemcheck.TotalNum += item.order_num;
+                                        isadd = true;
+                                    }
+                                }
                             }
                         }
                         if (isadd == false)
@@ -91,6 +105,7 @@ namespace PurchaseSystemWinForm
                                 TotalMoney = item.pur_total
                             };
                             lastresult.Add(Temp);
+                            catenum.Add(item.pur_id, item.category_name);
                         }
                     }
 
