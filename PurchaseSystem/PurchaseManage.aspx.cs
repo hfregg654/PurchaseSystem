@@ -90,6 +90,7 @@ namespace PurchaseSystem
 
                 PurchaseDBTool dBTool = new PurchaseDBTool();
                 datepicker.Text = dBTool.GetPurchaseDate(qid);
+                pdate = datepicker.Text;
                 decimal fullprice;
                 int page;
                 var result = dBTool.GetOrder(qid, out fullprice, out page, pIndex);
@@ -304,5 +305,7 @@ namespace PurchaseSystem
             ProdStatic.TempID = 0;
             Response.Redirect("~/Index.aspx");
         }
+
+       
     }
 }

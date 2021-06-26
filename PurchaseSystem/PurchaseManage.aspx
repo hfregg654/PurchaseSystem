@@ -119,7 +119,7 @@
                         alert("傳送失敗");
                     })
             });
-            
+
         });
     </script>
 </asp:Content>
@@ -138,7 +138,7 @@
         <br />
         <div class="row">
             <button id="Btnadd" type="button" class="btn btn-success">＋</button>
-            <asp:Button ID="Btndel" runat="server" Text="－" CssClass="btn btn-danger" OnClick="Btndel_Click" 
+            <asp:Button ID="Btndel" runat="server" Text="－" CssClass="btn btn-danger" OnClick="Btndel_Click"
                 OnClientClick="return confirm('確定刪除勾選的訂單？');" />
         </div>
         <div class="row">
@@ -173,9 +173,9 @@
         <br />
         <div class="row justify-content-between">
             <div class="col">
-                <asp:Button ID="Btncancel" runat="server" Text="取消" CssClass="btn btn-danger" OnClick="Btncancel_Click"/>
+                <asp:Button ID="Btncancel" runat="server" Text="取消" CssClass="btn btn-danger" OnClick="Btncancel_Click" />
                 <asp:Button ID="BtnDone" runat="server" Text="完成" CssClass="btn btn-success"
-                    OnClientClick="return confirm('確定完成進貨單？');"  OnClick="BtnDone_Click"/>
+                    OnClientClick="return confirm('確定完成進貨單？');" OnClick="BtnDone_Click" />
                 <asp:HyperLink ID="HLFirst" runat="server">第一頁</asp:HyperLink>｜
                 <asp:HyperLink ID="HLBack" runat="server">上一頁</asp:HyperLink>｜
                 <asp:Repeater ID="RepPage" runat="server">

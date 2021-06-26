@@ -109,10 +109,10 @@ namespace PurchaseSystem.Utility
         public void InsertPurchase(string pur, DateTime purdate, decimal assests, List<OrderView> orders)
         {
             LogInfo info = HttpContext.Current.Session["IsLogined"] as LogInfo;
-            //if (info == null)
-            //{
-            //    return;
-            //}
+            if (info == null)
+            {
+                return;
+            }
             using (var context = new ContextModel())
             {
                 var updpurchase =
@@ -158,10 +158,10 @@ namespace PurchaseSystem.Utility
         public void UpdatePurchase(string pur, DateTime purdate, decimal assests, List<OrderView> orders)
         {
             LogInfo info = HttpContext.Current.Session["IsLogined"] as LogInfo;
-            //if (info == null)
-            //{
-            //    return;
-            //}
+            if (info == null)
+            {
+                return;
+            }
             using (var context = new ContextModel())
             {
                 var updpurchase =
@@ -333,7 +333,9 @@ namespace PurchaseSystem.Utility
                     }
                     else
                     {
-                        ProdStatic.noworder.Remove(ProdStatic.noworder.Where(obj => obj.OrderID == idtemp).FirstOrDefault());
+                        var selectorder = ProdStatic.noworder.Where(obj => obj.OrderID == idtemp).FirstOrDefault();
+                        ProdStatic.Subtotal -= selectorder.ProductPrice * selectorder.OrderNum;
+                        ProdStatic.noworder.Remove(selectorder);
                     }
                 }
                 context.SaveChanges();
