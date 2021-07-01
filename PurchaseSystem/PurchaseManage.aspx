@@ -82,6 +82,7 @@
             });
 
             $("#dialog").dialog({
+                modal: true,
                 autoOpen: false,
                 width: 800,
                 show: {},
