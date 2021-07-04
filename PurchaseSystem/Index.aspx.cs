@@ -108,16 +108,18 @@ namespace PurchaseSystem
             //查詢需輸出的資料放入報表顯示並開啟畫面至報表頁
             using (var context = new ContextModel())
             {
+                //查詢需輸出的資料
                 var rep =
                      (from obj in context.Purchases
                       where obj.pur_deldate == null
                       select new { obj.pur_id, obj.pur_total, obj.pur_purdate, obj.pur_credate }).ToList();
 
+                //將資料放入報表
                 PurchaseCrystalReport cr = new PurchaseCrystalReport();
                 cr.SetDataSource(rep);
-
                 PurchaseCRV.ReportSource = cr;
 
+                //開啟畫面至報表頁
                 cr.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "発注書一覧表");
             }
         }

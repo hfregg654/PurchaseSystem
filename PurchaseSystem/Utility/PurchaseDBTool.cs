@@ -87,7 +87,7 @@ namespace PurchaseSystem.Utility
                         }
                     }
                 }
-                TotalPage = (lastresult.Count / pageSize) + 1;
+                TotalPage = (lastresult.Count % pageSize) == 0 ? (lastresult.Count / pageSize) : (lastresult.Count / pageSize) + 1;
                 return lastresult;
             }
         }
